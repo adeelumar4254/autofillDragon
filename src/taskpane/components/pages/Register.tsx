@@ -471,13 +471,15 @@ function Register({ onConnected }: { onConnected: () => void }) {
                             bgcolor: BRAND_DARK,
                             py: 1.4,
                             borderRadius: "12px",
-                            fontWeight: 800
+                            fontWeight: 800,
+
+                             textTransform: "none"
                         }}
                     >
                         {loading ? (
                             <CircularProgress size={22} color="inherit" />
                         ) : (
-                            "Complete Registration"
+                            "Submit"
                         )}
                     </Button>
 
