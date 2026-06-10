@@ -284,9 +284,6 @@ const handleLogout = () => {
     }
   };
 
-
-
-
   if (isParsing || !email) {
     return (
       <Box
@@ -370,7 +367,8 @@ const handleLogout = () => {
   return (
     <Box sx={{
       display: 'flex', flexDirection: 'column', height: "100vh",
-      p: 2, pb: "0 !important", // Remove bottom padding to let footer sit flush
+      p: 2, pb: "0 !important", 
+      paddingTop: "0px !important",
       background: "radial-gradient(circle at top left, #f8fafc, #e2e8f0)",
       boxSizing: "border-box", overflow: "hidden"
     }}>
@@ -381,18 +379,18 @@ const handleLogout = () => {
       />
 
         <ProfileHeader
-        onLogout={handleLogout}      />
+        onLogout={handleLogout}  title="Email Summary"    />
 
-        <Divider sx={{mt:1}} />
+        {/* <Divider sx={{mt:1}} /> */}
 
 
       {/* 1. SCROLLABLE CONTENT AREA */}
       <Box sx={{ flexGrow: 1, overflowY: 'auto', pr: 0.5, pb: 2, '&::-webkit-scrollbar': { width: '4px' } }}>
         <Fade in={true} timeout={800}>
           <Box>
-            <Typography variant="overline" sx={{ fontWeight: 900, color: "#1f5975", ml: 1, letterSpacing: 2, opacity: 1 }}>
+            {/* <Typography variant="overline" sx={{ fontWeight: 900, color: "#1f5975", ml: 1, letterSpacing: 2, opacity: 1 }}>
               Email Summary
-            </Typography>
+            </Typography> */}
 
             <Paper sx={{ ...glassStyle, p: 2, mb: 2, mt: 1 }}>
               <Stack spacing={1.8}>
