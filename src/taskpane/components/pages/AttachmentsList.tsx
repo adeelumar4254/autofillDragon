@@ -24,8 +24,9 @@ const AttachmentsList = ({ attachments, selectedIds, onToggleOne, onSelectAll, g
   return (
     <Box sx={{ mt: 1 }}>
       <Stack direction="row" sx={{ px: 1, justifyContent: "space-between", alignItems: "center" }}>
-        <Typography variant="overline" sx={{ fontWeight: 900, color: "primary.main", letterSpacing: 2, opacity: 0.8 }}>
-          Assets ({attachments.length})
+        <Typography variant="overline" sx={{ fontWeight: 900, color: "#1f5975", letterSpacing: 2, opacity:1 }}>
+          Assets 
+          {/* ({attachments.length}) */}
         </Typography>
         {attachments.length > 0 && (
           <Button 

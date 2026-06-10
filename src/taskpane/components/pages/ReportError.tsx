@@ -54,7 +54,7 @@ const ReportError = () => {
           </Typography>
         </Paper>
 
-        <Typography variant="body2" sx={{ color: "#64748b", mb: 1, fontWeight: 500 }}>
+        <Typography variant="body2" sx={{ color: "#1f5975", mb: 1, fontWeight: 500 }}>
           Additional details (Optional):
            {/* Additional details (Optional): */}
         </Typography>
@@ -75,7 +75,7 @@ const ReportError = () => {
         <Button
           fullWidth size="small" variant="contained" disableElevation
           onClick={handleSubmit} disabled={submitting}
-          sx={{ py: 1, bgcolor: "#6aa2ba", borderRadius: "10px", textTransform: "none", fontWeight: 700 }}
+          sx={{ py: 1, bgcolor: "#1f5975", borderRadius: "10px", textTransform: "none", fontWeight: 700 }}
         >
           {submitting ? "Submitting..." : "Submit Report"}
         </Button>

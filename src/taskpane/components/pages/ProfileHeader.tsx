@@ -27,7 +27,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ onLogout }) => {
           size="small"
           sx={{
             p: 0,
-            color: "#6aa2ba", 
+            color: "#1f5975", 
             transition: "all 0.2s ease",
             "&:hover": {
               transform: "scale(1.1)",

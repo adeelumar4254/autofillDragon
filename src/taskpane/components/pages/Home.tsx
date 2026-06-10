@@ -40,6 +40,9 @@ const glassStyle = {
   }
 };
 
+
+
+const BRAND_DARK = "#1f5975";
 const Home = () => {
   const { showSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false);
@@ -321,7 +324,7 @@ const handleLogout = () => {
             variant="h5"
             sx={{
               fontWeight: 800,
-              color: "#1e293b",
+              color: "#1f5975",
               mb: 1,
               fontSize: "1.4rem" // Responsive sizing
             }}
@@ -332,7 +335,7 @@ const handleLogout = () => {
           <Typography
             variant="body1"
             sx={{
-              color: "#64748b",
+              color: "#1f5975",
               maxWidth: 280,
               mx: "auto",
               lineHeight: 1.5,
@@ -387,23 +390,23 @@ const handleLogout = () => {
       <Box sx={{ flexGrow: 1, overflowY: 'auto', pr: 0.5, pb: 2, '&::-webkit-scrollbar': { width: '4px' } }}>
         <Fade in={true} timeout={800}>
           <Box>
-            <Typography variant="overline" sx={{ fontWeight: 900, color: "primary.main", ml: 1, letterSpacing: 2, opacity: 0.8 }}>
+            <Typography variant="overline" sx={{ fontWeight: 900, color: "#1f5975", ml: 1, letterSpacing: 2, opacity: 1 }}>
               Email Summary
             </Typography>
 
             <Paper sx={{ ...glassStyle, p: 2, mb: 2, mt: 1 }}>
               <Stack spacing={1.8}>
-                <DataRow icon={<SubjectIcon sx={{ fontSize: 18 }} />} label="Subject" value={email.subject} isTitle />
+                <DataRow icon={<SubjectIcon sx={{ fontSize: 18,color:"#1f5975" }} />} label="Subject" value={email.subject} isTitle />
                 <Divider sx={{ opacity: 0.1 }} />
-                <DataRow icon={<PersonIcon sx={{ fontSize: 18 }} />} label="Origin" value={email.senderName} subValue={email.senderEmail} />
-                <DataRow icon={<EmailIcon sx={{ fontSize: 18 }} />} label="Recipient" value={email.userEmail} />
+                <DataRow icon={<PersonIcon sx={{ fontSize: 18,color:"#1f5975" }} />} label="Origin" value={email.senderName} subValue={email.senderEmail} />
+                <DataRow icon={<EmailIcon sx={{ fontSize: 18,color:"#1f5975" }} />} label="Recipient" value={email.userEmail} />
 
                 <Box sx={{ pt: 0.5 }}>
                   <Button
                     fullWidth variant="outlined" size="small"
                     onClick={() => setExpanded(!expanded)}
                     endIcon={<ExpandMoreIcon sx={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: '0.4s cubic-bezier(0.4, 0, 0.2, 1)' }} />}
-                    sx={{ textTransform: 'none', borderRadius: '10px', fontWeight: 700, fontSize: '0.65rem', py: 0.5, borderColor: 'rgba(0,0,0,0.1)', color: 'text.secondary' }}
+                    sx={{ textTransform: 'none', borderRadius: '10px', fontWeight: 700, fontSize: '0.65rem', py: 0.5, borderColor: 'rgba(0,0,0,0.1)', color: '#1f5975' }}
                   >
                     Email Body
                   </Button>
@@ -456,9 +459,9 @@ const handleLogout = () => {
             startIcon={loading ? <CircularProgress size={14} color="inherit" /> : <CloudUploadIcon sx={{ fontSize: 16 }} />}
             sx={{
               py: 1, fontWeight: 800, textTransform: 'none', borderRadius: '10px', fontSize: '0.8rem',
-              background: 'linear-gradient(45deg, #6aa2ba, #6aa2ba)',
+              background: '#1f5975',
               boxShadow: '0 2px 8px rgba(25, 118, 210, 0.2)',
-              "&:hover": { background: 'linear-gradient(45deg, #6aa2ba, #6698adff)' }
+              "&:hover": { background: '#1f5975' }
             }}
           >
             {loading ? "Processing..." : `Process Email`}
