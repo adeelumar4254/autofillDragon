@@ -253,7 +253,7 @@ function Register({ onConnected }: { onConnected: () => void }) {
                                     // fontSize: "0.85rem"
                                 }}
                             >
-                                Register With Email
+                                Register
                             </Button>
 
                             <Typography

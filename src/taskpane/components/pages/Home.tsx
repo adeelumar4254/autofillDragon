@@ -144,7 +144,7 @@ const handleLogout = () => {
   }, [loadData]);
 
 
-
+// process email function - triggers gathering all data and sends to API
   const handleProcess_Email = async () => {
     setLoaderKey((prev) => prev + 1);
     setIsProcessingEmail(true);
@@ -326,7 +326,7 @@ const handleLogout = () => {
               fontSize: "1.4rem" // Responsive sizing
             }}
           >
-            Parsing Email
+            Reading Email
           </Typography>
 
           <Typography
@@ -410,7 +410,7 @@ const handleLogout = () => {
                   </Button>
                   <Collapse in={expanded}>
                     <Paper sx={{ mt: 1.5, p: 1.5, bgcolor: 'rgba(0,0,0,0.02)', borderRadius: '12px', border: '1px dashed rgba(0,0,0,0.1)' }}>
-                      <Typography variant="caption" sx={{ display: 'block', maxHeight: 90, overflowY: 'auto', fontStyle: 'italic', lineHeight: 1.6, color: 'text.secondary' }}>
+                      <Typography variant="caption" sx={{ display: 'block', maxHeight: 90, overflowX: "hidden",overflowY: 'auto', fontStyle: 'italic', lineHeight: 1.6, color: 'text.secondary' }}>
                         {email.bodyText || "Analyzing payload content..."}
                       </Typography>
                       <Stack direction="row" spacing={1} sx={{ mt: 1.5 }}>

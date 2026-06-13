@@ -1,50 +1,73 @@
 // import React from "react";
-// import { Box, IconButton, Tooltip } from "@mui/material";
+// import { Box, Button, Typography } from "@mui/material";
 // import { Logout as LogoutIcon } from "@mui/icons-material";
 
 // interface ProfileHeaderProps {
 //   onLogout?: () => void;
+//   title?: string; 
 // }
 
-// const ProfileHeader: React.FC<ProfileHeaderProps> = ({ onLogout }) => {
+// const ProfileHeader: React.FC<ProfileHeaderProps> = ({ onLogout, title }) => {
 //   return (
 //     <Box
 //       sx={{
 //         display: "flex",
 //         justifyContent: "space-between",
 //         alignItems: "center",
-//         marginTop: "-10px", 
+//         marginTop: "10px",
 //         px: 1,
+//         mb: 1
 //       }}
 //     >
-    
-//       <Box />
+//       <Typography 
+//         variant="h6" 
+//         sx={{ 
+//           fontSize: "1rem", // Slightly smaller font for balance
+//           fontWeight: 800, 
+//           color: "#1f5975" 
+//         }}
+//       >
+//         {title}
+//       </Typography>
 
-//       {/* --- RIGHT: LOGOUT ICON ONLY --- */}
-//       <Tooltip title="Logout" arrow>
-//         <IconButton
-//           onClick={onLogout}
-//           size="small"
-//           sx={{
-//             p: 0,
-//             color: "#1f5975", 
-//             transition: "all 0.2s ease",
-//             "&:hover": {
-//               transform: "scale(1.1)",
-//               background: "transparent",
-//               color: "#d32f2f", // Darker red on hover
-//             },
-//           }}
-//         >
-//           <LogoutIcon sx={{ fontSize: 25 }} /> 
-    
-//         </IconButton>
-//       </Tooltip>
+//       <Button
+//         onClick={onLogout}
+//         variant="outlined"
+//         size="small"
+//         startIcon={<LogoutIcon sx={{ fontSize: 16 }} />} // Smaller icon (16 instead of 18)
+//         sx={{
+//           color: "#ff4d4d",
+//           borderColor: "#ff4d4d",
+//           borderRadius: "50px",
+//           textTransform: "none",
+//           fontWeight: 700,
+//           fontSize: "0.7rem",
+//           minWidth: "auto",   
+//           px: 1,            
+//           py: 0.1,            
+//           "& .MuiButton-startIcon": {
+//             marginRight: "4px" 
+//           },
+//           "&:hover": {
+//             borderColor: "#d32f2f",
+//             backgroundColor: "rgba(211, 47, 47, 0.04)",
+//             color: "#d32f2f",
+//           },
+//         }}
+//       >
+//         Logout
+//       </Button>
 //     </Box>
 //   );
 // };
 
 // export default ProfileHeader;
+
+
+
+
+
+
 
 
 
@@ -187,10 +210,14 @@
 
 
 
+
+
+
+
 import React, { useState } from "react";
 import {
   Box, Typography, IconButton, Avatar, Menu, MenuItem,
-  ListItemIcon, Divider
+  ListItemIcon, Divider, Button
 } from "@mui/material";
 import {
   Logout as LogoutIcon,
@@ -219,9 +246,8 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ title, onLogout }) => {
     if (onLogout) onLogout();
   };
 
-  // Keep userName for the menu display, but we don't need userInitial anymore
   const userName = typeof Office !== "undefined" ? Office.context.mailbox?.userProfile?.displayName : "Outlook User";
-
+console.log(userName);
   return (
     <>
       <Box sx={{
@@ -232,12 +258,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ title, onLogout }) => {
         px: 1 
       }}>
         
-        {/* --- TITLE SECTION --- */}
         <Typography variant="h6" sx={{ fontWeight: 800, color: "#1f5975", fontSize: "1rem" }}>
           {title || "Email Summary"}
         </Typography>
 
-        {/* --- PROFILE ICON BUTTON --- */}
         <IconButton
           onClick={handleProfileClick}
           size="small"
@@ -260,13 +284,11 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ title, onLogout }) => {
               boxShadow: "0 2px 8px rgba(106, 162, 186, 0.3)" 
             }}
           >
-            {/* Always show the AccountCircleIcon */}
             <AccountCircleIcon sx={{ fontSize: 26, color: "#fff" }} />
           </Avatar>
         </IconButton>
       </Box>
 
-      {/* --- PROFILE MENU --- */}
       <Menu
         anchorEl={anchorEl}
         open={openMenu}
@@ -279,19 +301,11 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ title, onLogout }) => {
             sx: {
               mt: 1.5,
               borderRadius: '12px',
-              minWidth: 200,
+              minWidth: 220, // Slightly wider to fit the pill button
               background: "rgba(255, 255, 255, 0.95)",
               backdropFilter: "blur(20px)",
               border: "1px solid rgba(255,255,255,0.5)",
               boxShadow: '0px 10px 25px rgba(0,0,0,0.1)',
-              '& .MuiMenuItem-root': {
-                fontSize: '0.85rem',
-                fontWeight: 600,
-                py: 1.2,
-                borderRadius: '8px',
-                mx: 0.5,
-                transition: '0.2s',
-              }
             },
           }
         }}
@@ -307,12 +321,36 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ title, onLogout }) => {
 
         <Divider sx={{ my: 0.5, opacity: 0.5 }} />
 
-        <MenuItem onClick={handleInternalLogout} sx={{ color: 'error.main', '&:hover': { bgcolor: 'rgba(211, 47, 47, 0.05)' } }}>
-          <ListItemIcon>
-            <LogoutIcon fontSize="small" sx={{ color: 'error.main' }} />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
+        {/* --- CUSTOM PILL LOGOUT BUTTON --- */}
+       {/* --- SMALLER PILL LOGOUT BUTTON --- */}
+        <Box sx={{ px: 2, py: 1.5, display: 'flex', justifyContent: 'center',float: "left" }}>
+          <MenuItem 
+            onClick={handleInternalLogout} 
+            disableRipple 
+            sx={{ 
+              color: '#ff4d4d', 
+              border: '1px solid #ff4d4d',
+              borderRadius: '50px',
+              width: 'fit-content',
+              minWidth: '100px', 
+              minHeight: 'auto',  
+              px: 2,                
+              py: 0.6,              
+              fontSize: '0.75rem',  
+              fontWeight: 700,
+              transition: 'all 0.2s ease',
+              '&:hover': { 
+                bgcolor: 'rgba(255, 77, 77, 0.05)',
+                borderColor: '#d32f2f',
+                color: '#d32f2f',
+                transform: 'translateY(-1px)'
+              } 
+            }}
+          >
+            <LogoutIcon sx={{ mr: 1, fontSize: 16 }} /> {/* Smaller icon */}
+            Logout
+          </MenuItem>
+        </Box>
       </Menu>
     </>
   );

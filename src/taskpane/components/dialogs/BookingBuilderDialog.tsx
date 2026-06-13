@@ -54,7 +54,7 @@ const BookingBuilderDialog: React.FC<BookingBuilderDialogProps> = ({
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle sx={{ textAlign: "center", fontWeight: 700 }}>
-        Booking Builder
+         BookingBuilder®
       </DialogTitle>
 
       <DialogContent>

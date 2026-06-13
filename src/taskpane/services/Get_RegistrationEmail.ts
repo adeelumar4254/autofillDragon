@@ -8,7 +8,7 @@ export interface RegistrationResponse {
 }
 
 export const GetRegistrationEmail = async (email: string): Promise<RegistrationResponse> => {
-    const url = `https://dragon.bookingbuilder.com/AutofillService/api/Registration/email-addin-submit-email?email=${encodeURIComponent(email)}&emailType=outlook`;
+    const url = `${process.env.Register_Email}email=${encodeURIComponent(email)}&emailType=outlook`;
     
     const requestOptions = {
         method: "GET",

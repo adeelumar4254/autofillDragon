@@ -65,7 +65,7 @@ const ProcessingLoader = ({ open }: ProcessingLoaderProps) => {
           mb: 3,
         }}
       >
-        Sending data to Booking Builder...
+        Sending data to BookingBuilder®...
       </Typography>
 
       <LinearProgress

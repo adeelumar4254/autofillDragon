@@ -1,6 +1,6 @@
 
 import { getClientInfo } from "../utils/clientInfo";
-const  API_URL =  "https://parsing.bookingbuilder.com/Parsing/api/ParsingService/email-parsing"
+const  API_URL =  process.env.PARSING_API 
  //const API_URL =  "https://bb-admin-dev-aiparsing-h6egbrchhad2gcc5.eastus-01.azurewebsites.net/Parsing/api/ParsingService/email-parsing";
   
 export const parseEmail = async (emailMessage: any) => {
