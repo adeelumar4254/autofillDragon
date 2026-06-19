@@ -8,6 +8,8 @@ const rootElement: HTMLElement | null = document.getElementById("container");
 const root = rootElement ? createRoot(rootElement) : undefined;
 
 Office.onReady(() => {
+
+
   root?.render(
     <HashRouter>
       <App />

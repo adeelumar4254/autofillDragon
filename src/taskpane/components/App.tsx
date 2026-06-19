@@ -8,6 +8,7 @@ const useStyles = makeStyles({
   },
 });
 
+
 const App: React.FC = () => {
   const styles = useStyles();
 
@@ -17,6 +18,7 @@ const App: React.FC = () => {
      
       <SnackbarProvider>
         <AppRouter />
+        {/* <ErrorReportTest /> */}
       </SnackbarProvider>
 
     </div >

@@ -8,14 +8,14 @@ export interface RegistrationResponse {
 }
 
 export const GetRegistrationEmail = async (email: string): Promise<RegistrationResponse> => {
-    const url = `${process.env.Register_Email}email=${encodeURIComponent(email)}&emailType=outlook`;
+    const apiUrl = `${process.env.Register_Email}email=${encodeURIComponent(email)}&emailType=outlook`;
     
     const requestOptions = {
         method: "GET",
         redirect: "follow" as RequestRedirect
     };
 
-    const response = await fetch(url, requestOptions);
+    const response = await fetch(apiUrl, requestOptions);
     if (!response.ok) {
         throw new Error("Network response was not ok");
     }

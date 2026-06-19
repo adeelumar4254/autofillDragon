@@ -14,7 +14,7 @@ import {
 import Logo from "../../../../assets/icon-64.png";
 
 import BookingBuilderDialog from "../dialogs/BookingBuilderDialog";
-import ProfileHeader from "./ProfileHeader"; 
+import ProfileHeader from "./ProfileHeader";
 import parsingLoader from "../../../../assets/D_parsing-loader.webm";
 import { getActiveEmailDetails } from "../../utils/officeHelper";
 import { parseEmail } from "../../services/parsingService";
@@ -57,7 +57,6 @@ const Home = () => {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [isParsing, setIsParsing] = useState(true);
   const [isProcessingEmail, setIsProcessingEmail] = useState(false);
-  const [submissionError, setSubmissionError] = useState(false);
   const [loaderKey, setLoaderKey] = useState(0);
 
   // handle api response url 
@@ -65,17 +64,20 @@ const Home = () => {
   const [bookingUrl, setBookingUrl] = useState("");
   const navigate = useNavigate();
 
+  const [submissionError, setSubmissionError] = useState(false);
+
   const [apiErrorMessage, setApiErrorMessage] = useState<string>("");
 
+  const [uniqueId, setUniqueId] = useState<string>("");
 
 
 
-const handleLogout = () => {
-  // Add your logout logic here (e.g., clearing tokens)
-  window.localStorage.removeItem("token");
-  showSnackbar("Logged out successfully", "success");
-  navigate("/register");
-};
+  const handleLogout = () => {
+    // Add your logout logic here (e.g., clearing tokens)
+    window.localStorage.removeItem("token");
+    showSnackbar("Logged out successfully", "success");
+    navigate("/register");
+  };
 
   // 1. REUSABLE DATA LOADER
   const loadData = useCallback(async () => {
@@ -144,11 +146,13 @@ const handleLogout = () => {
   }, [loadData]);
 
 
-// process email function - triggers gathering all data and sends to API
+  // process email function - triggers gathering all data and sends to API
   const handleProcess_Email = async () => {
     setLoaderKey((prev) => prev + 1);
     setIsProcessingEmail(true);
     setSubmissionError(false);
+    setApiErrorMessage("");
+    setUniqueId("");
     if (selectedIds.length === 0 && !sendAsHtml && !sendAsText) {
       showSnackbar("Please select data to process", "warning");
       setIsProcessingEmail(false);
@@ -261,25 +265,45 @@ const handleLogout = () => {
       console.log("SENDING TO API:", emailMessage);
       const response = await parseEmail(emailMessage);
 
-      if (response.isSuccess && response.data) {
-        setBookingUrl(response.data);
-        setShowBookingDialog(true);
-        showSnackbar("Email processed successfully", "success");
-      } else {
-        throw new Error(response.error?.message || "Server rejected request");
+      // const uId =
+      //   response.additionalInformation?.find(
+      //     (info: any) => info.name === "uniqueId"
+      //   )?.value || "";
+
+           // Extract uniqueId even if response fails
+      const uId = response.additionalInformation?.find((info: any) => info.name === "uniqueId")?.value || "";
+      setUniqueId(uId);
+        console.log("UniqueId:", uId);
+
+      // Optional: store for future use elsewhere
+      setUniqueId(uId);
+
+      // Handle API failure immediately
+      if (!response.isSuccess || !response.data) {
+        const errorMessage =
+          response.error?.message || "Server rejected request";
+
+        setApiErrorMessage(errorMessage);
+        setSubmissionError(true);
+
+        return;
       }
 
-    } catch (err) {
+      // Success
+      setBookingUrl(response.data);
+      setShowBookingDialog(true);
+      showSnackbar("Email processed successfully", "success");
+    }
+    catch (err: any) {
       console.error("Parsing Error:", err);
 
-      // Extract the real error message
       const msg = err?.message || "An unexpected error occurred";
-      setApiErrorMessage(msg); // Store it to pass to the report page
-      setSubmissionError(true);
 
-      // Show the ACTUAL error in the snackbar
-      showSnackbar(msg, "error", () => navigate("/report", { state: { error: msg } }));
-    } finally {
+      setApiErrorMessage(msg);
+      setSubmissionError(true);
+      showSnackbar(msg, "error");
+    }
+    finally {
       setIsProcessingEmail(false);
     }
   };
@@ -313,7 +337,7 @@ const handleLogout = () => {
             mb: 2
           }}
         >
-         
+
         </Box>
 
         <Box sx={{ px: 4 }}>
@@ -367,7 +391,7 @@ const handleLogout = () => {
   return (
     <Box sx={{
       display: 'flex', flexDirection: 'column', height: "100vh",
-      p: 2, pb: "0 !important", 
+      p: 2, pb: "0 !important",
       paddingTop: "0px !important",
       background: "radial-gradient(circle at top left, #f8fafc, #e2e8f0)",
       boxSizing: "border-box", overflow: "hidden"
@@ -378,10 +402,10 @@ const handleLogout = () => {
         open={isProcessingEmail}
       />
 
-        <ProfileHeader
-        onLogout={handleLogout}  title="Email Summary"    />
+      <ProfileHeader
+        onLogout={handleLogout} title="Email Summary" />
 
-        {/* <Divider sx={{mt:1}} /> */}
+      {/* <Divider sx={{mt:1}} /> */}
 
 
       {/* 1. SCROLLABLE CONTENT AREA */}
@@ -394,10 +418,10 @@ const handleLogout = () => {
 
             <Paper sx={{ ...glassStyle, p: 2, mb: 2, mt: 1 }}>
               <Stack spacing={1.8}>
-                <DataRow icon={<SubjectIcon sx={{ fontSize: 18,color:"#1f5975" }} />} label="Subject" value={email.subject} isTitle />
+                <DataRow icon={<SubjectIcon sx={{ fontSize: 18, color: "#1f5975" }} />} label="Subject" value={email.subject} isTitle />
                 <Divider sx={{ opacity: 0.1 }} />
-                <DataRow icon={<PersonIcon sx={{ fontSize: 18,color:"#1f5975" }} />} label="Origin" value={email.senderName} subValue={email.senderEmail} />
-                <DataRow icon={<EmailIcon sx={{ fontSize: 18,color:"#1f5975" }} />} label="Recipient" value={email.userEmail} />
+                <DataRow icon={<PersonIcon sx={{ fontSize: 18, color: "#1f5975" }} />} label="Origin" value={email.senderName} subValue={email.senderEmail} />
+                <DataRow icon={<EmailIcon sx={{ fontSize: 18, color: "#1f5975" }} />} label="Recipient" value={email.userEmail} />
 
                 <Box sx={{ pt: 0.5 }}>
                   <Button
@@ -410,7 +434,7 @@ const handleLogout = () => {
                   </Button>
                   <Collapse in={expanded}>
                     <Paper sx={{ mt: 1.5, p: 1.5, bgcolor: 'rgba(0,0,0,0.02)', borderRadius: '12px', border: '1px dashed rgba(0,0,0,0.1)' }}>
-                      <Typography variant="caption" sx={{ display: 'block', maxHeight: 90, overflowX: "hidden",overflowY: 'auto', fontStyle: 'italic', lineHeight: 1.6, color: 'text.secondary' }}>
+                      <Typography variant="caption" sx={{ display: 'block', maxHeight: 90, overflowX: "hidden", overflowY: 'auto', fontStyle: 'italic', lineHeight: 1.6, color: 'text.secondary' }}>
                         {email.bodyText || "Analyzing payload content..."}
                       </Typography>
                       <Stack direction="row" spacing={1} sx={{ mt: 1.5 }}>
@@ -467,11 +491,16 @@ const handleLogout = () => {
 
           {submissionError && (
             <Fade in={submissionError}>
-              <Button
+                 <Button
                 fullWidth variant="text" color="error" size="small"
                 startIcon={<ErrorIcon sx={{ fontSize: 16 }} />}
-                // PASS THE STATE HERE
-                onClick={() => navigate("/report", { state: { error: apiErrorMessage } })}
+                // UPDATED: Now passes both the error message and the uniqueId stored in state
+                onClick={() => navigate("/report", { 
+                    state: { 
+                        error: apiErrorMessage, 
+                        uniqueId: uniqueId 
+                    } 
+                })}
                 sx={{
                   textTransform: 'none', fontWeight: 700, fontSize: '0.75rem', py: 0.5,
                   bgcolor: 'rgba(211, 47, 47, 0.05)',

@@ -1,7 +1,6 @@
 
 import { getClientInfo } from "../utils/clientInfo";
-const  API_URL =  process.env.PARSING_API 
- //const API_URL =  "https://bb-admin-dev-aiparsing-h6egbrchhad2gcc5.eastus-01.azurewebsites.net/Parsing/api/ParsingService/email-parsing";
+const  apiUrl =  process.env.PARSING_API 
   
 export const parseEmail = async (emailMessage: any) => {
   const token = localStorage.getItem("token");
@@ -12,7 +11,7 @@ export const parseEmail = async (emailMessage: any) => {
 
   const { emailClient, emailClientVersion, operatingSystem } = getClientInfo();
 console.log(emailMessage);
-  const response = await fetch(API_URL, {
+  const response = await fetch(apiUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

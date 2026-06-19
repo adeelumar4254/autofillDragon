@@ -11,10 +11,12 @@ export interface RegistrationResponse {
 
 //Verify the code (nonce) and get the actual token
 export const VerifyRegistrationNonce = async (_nonce: string): Promise<RegistrationResponse> => {
-     const url =`${process.env.Register_Nonce}nonce=${encodeURIComponent(_nonce)}`;
-    // const url = "https://dragon.bookingbuilder.com/AutofillService/api/Registration/get-client-registration-from-nonce?nonce=P1LYzF1Luk2wBqkJCJm25BExzWX0-CBUym-x";
+     const apiUrl =`${process.env.Register_Nonce}nonce=${encodeURIComponent(_nonce)}`;
 
-    const response = await fetch(url, { method: "GET", redirect: "follow" });
+    const response = await fetch(apiUrl,
+         { method: "GET",
+             redirect: "follow" }
+        );
     if (!response.ok) throw new Error("Verification request failed");
     return await response.json();
 };
